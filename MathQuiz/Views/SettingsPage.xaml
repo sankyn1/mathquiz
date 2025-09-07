@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.SettingsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:SettingsViewModel"
+             BackgroundColor="{DynamicResource Background}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Frame Grid.Row="0"
+               BackgroundColor="{DynamicResource Primary}"
+               Padding="20,15"
+               CornerRadius="0"
+               Margin="0">
+            <Label Text="Game Settings"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center" />
+        </Frame>
+
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Game Settings -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="🎮 Game Settings"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}" />
+
+                        <!-- Game Mode -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="Game Mode"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{DynamicResource OnSurface}" />
+                                <Label Text="{Binding Settings.Mode}"
+                                       FontSize="14"
+                                       TextColor="{DynamicResource Primary}"
+                                       FontAttributes="Italic" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="Change"
+                                    Command="{Binding ToggleModeCommand}"
+                                    FontSize="12"
+                                    Padding="10,5"
+                                    BackgroundColor="{DynamicResource Primary}"
+                                    TextColor="White"
+                                    CornerRadius="15"
+                                    MinimumHeightRequest="30" />
+                        </Grid>
+
+                        <!-- Questions Per Session -->
+                        <VerticalStackLayout>
+                            <Label Text="Questions Per Session"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource OnSurface}" />
+                            <Label Text="{Binding Settings.QuestionsPerSession, StringFormat='{0} questions'}"
+                                   FontSize="14"
+                                   TextColor="{DynamicResource Primary}"
+                                   FontAttributes="Italic"
+                                   Margin="0,5,0,10" />
+
+                            <!-- Questions Picker -->
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5">
+                                <Button Grid.Column="0"
+                                        Text="5"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="5"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=5}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="1"
+                                        Text="10"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="10"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=10}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="2"
+                                        Text="15"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="15"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=15}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5" Margin="0,5,0,0">
+                                <Button Grid.Column="0"
+                                        Text="20"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="20"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=20}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="1"
+                                        Text="25"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="25"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=25}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="2"
+                                        Text="30"
+                                        Command="{Binding UpdateQuestionsPerSessionCommand}"
+                                        CommandParameter="30"
+                                        BackgroundColor="{Binding Settings.QuestionsPerSession, Converter={StaticResource IntToColorConverter}, ConverterParameter=30}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <!-- Timer Settings -->
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="Timer"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{DynamicResource OnSurface}" />
+                                    <Label Text="{Binding Settings.TimerEnabled, Converter={StaticResource BoolToTimerTextConverter}, ConverterParameter={Binding Settings.TimerSeconds}}"
+                                           FontSize="14"
+                                           TextColor="{Binding Settings.TimerEnabled, Converter={StaticResource BoolToColorConverter}}"
+                                           FontAttributes="Italic" />
+                                </VerticalStackLayout>
+
+                                <Switch Grid.Column="1"
+                                        IsToggled="{Binding Settings.TimerEnabled}"
+                                        OnColor="{DynamicResource Primary}"
+                                        ThumbColor="White" />
+                            </Grid>
+
+                            <!-- Timer Duration (when enabled) -->
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5" Margin="0,10,0,0"
+                                  IsVisible="{Binding Settings.TimerEnabled}">
+                                <Button Grid.Column="0"
+                                        Text="60s"
+                                        Command="{Binding UpdateTimerSecondsCommand}"
+                                        CommandParameter="60"
+                                        BackgroundColor="{Binding Settings.TimerSeconds, Converter={StaticResource IntToColorConverter}, ConverterParameter=60}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="1"
+                                        Text="90s"
+                                        Command="{Binding UpdateTimerSecondsCommand}"
+                                        CommandParameter="90"
+                                        BackgroundColor="{Binding Settings.TimerSeconds, Converter={StaticResource IntToColorConverter}, ConverterParameter=90}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                                <Button Grid.Column="2"
+                                        Text="120s"
+                                        Command="{Binding UpdateTimerSecondsCommand}"
+                                        CommandParameter="120"
+                                        BackgroundColor="{Binding Settings.TimerSeconds, Converter={StaticResource IntToColorConverter}, ConverterParameter=120}"
+                                        TextColor="White"
+                                        FontSize="14"
+                                        CornerRadius="10" />
+                            </Grid>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Audio & Haptic Settings -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="🔊 Audio And Haptics"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}" />
+
+                        <!-- Sound Effects -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="Sound Effects"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{DynamicResource OnSurface}" />
+                                <Label Text="{Binding Settings.SoundEnabled, Converter={StaticResource BoolToEnabledTextConverter}}"
+                                       FontSize="14"
+                                       TextColor="{Binding Settings.SoundEnabled, Converter={StaticResource BoolToColorConverter}}"
+                                       FontAttributes="Italic" />
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.SoundEnabled}"
+                                    OnColor="{DynamicResource Primary}"
+                                    ThumbColor="White" />
+                        </Grid>
+
+                        <!-- Vibration -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="Vibration Feedback"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{DynamicResource OnSurface}" />
+                                <Label Text="{Binding Settings.VibrationEnabled, Converter={StaticResource BoolToEnabledTextConverter}}"
+                                       FontSize="14"
+                                       TextColor="{Binding Settings.VibrationEnabled, Converter={StaticResource BoolToColorConverter}}"
+                                       FontAttributes="Italic" />
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.VibrationEnabled}"
+                                    OnColor="{DynamicResource Primary}"
+                                    ThumbColor="White" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Accessibility Settings -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="♿ Accessibility"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}" />
+
+                        <!-- Bigger Text -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="Bigger Text"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{DynamicResource OnSurface}" />
+                                <Label Text="Increases text size for better readability"
+                                       FontSize="12"
+                                       TextColor="{DynamicResource OnSurface}"
+                                       Opacity="0.8" />
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.BiggerText}"
+                                    OnColor="{DynamicResource Primary}"
+                                    ThumbColor="White" />
+                        </Grid>
+
+                        <!-- High Contrast -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="High Contrast"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{DynamicResource OnSurface}" />
+                                <Label Text="Uses high contrast colors for better visibility"
+                                       FontSize="12"
+                                       TextColor="{DynamicResource OnSurface}"
+                                       Opacity="0.8" />
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding Settings.HighContrast}"
+                                    OnColor="{DynamicResource Primary}"
+                                    ThumbColor="White" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Error Message -->
+                <Label Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}"
+                       FontSize="14"
+                       TextColor="{DynamicResource Error}"
+                       HorizontalTextAlignment="Center"
+                       Padding="10"
+                       BackgroundColor="#FFEBEE" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Action Buttons -->
+        <Frame Grid.Row="2"
+               BackgroundColor="{DynamicResource Surface}"
+               Padding="20,15"
+               CornerRadius="0"
+               Margin="0">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+
+                <Button Grid.Column="0"
+                        Text="💾 Save Settings"
+                        Command="{Binding SaveSettingsCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        FontSize="16"
+                        IsEnabled="{Binding IsDirty}"
+                        Opacity="{Binding IsDirty, Converter={StaticResource BoolToOpacityConverter}}"
+                        MinimumHeightRequest="45" />
+
+                <Button Grid.Column="1"
+                        Text="🔄 Reset to Defaults"
+                        Command="{Binding ResetToDefaultsCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        BackgroundColor="{DynamicResource Warning}"
+                        FontSize="16"
+                        MinimumHeightRequest="45" />
+
+            </Grid>
+        </Frame>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                          IsVisible="{Binding IsBusy}"
+                          IsRunning="{Binding IsBusy}"
+                          Color="{DynamicResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

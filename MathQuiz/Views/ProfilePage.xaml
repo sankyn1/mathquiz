@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.ProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MathQuiz.Models"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:ProfileViewModel"
+             BackgroundColor="{DynamicResource Background}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <Frame Grid.Row="0"
+               BackgroundColor="{DynamicResource Primary}"
+               Padding="20,15"
+               CornerRadius="0"
+               Margin="0">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Player Profiles"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center" />
+
+                <Button Grid.Column="1"
+                        Text="+ New"
+                        Command="{Binding StartCreateUserCommand}"
+                        FontSize="12"
+                        Padding="10,5"
+                        BackgroundColor="White"
+                        TextColor="{DynamicResource Primary}"
+                        CornerRadius="15"
+                        MinimumHeightRequest="30" />
+            </Grid>
+        </Frame>
+
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Create New Profile Section -->
+                <Frame IsVisible="{Binding IsCreatingUser}"
+                       Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Create New Profile"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}"
+                               HorizontalTextAlignment="Center" />
+
+                        <Entry Text="{Binding NewUserName}"
+                               Placeholder="Enter player name..."
+                               FontSize="16"
+                               Margin="0,10"
+                               SemanticProperties.Hint="Enter a name for the new profile" />
+
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0"
+                                    Text="Create"
+                                    Command="{Binding CreateUserCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    FontSize="14"
+                                    MinimumHeightRequest="40" />
+
+                            <Button Grid.Column="1"
+                                    Text="Random"
+                                    Command="{Binding CreateRandomUserCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    BackgroundColor="{DynamicResource Success}"
+                                    FontSize="14"
+                                    MinimumHeightRequest="40" />
+
+                            <Button Grid.Column="2"
+                                    Text="Cancel"
+                                    Command="{Binding CancelCreateUserCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    BackgroundColor="{DynamicResource OnSurface}"
+                                    FontSize="14"
+                                    MinimumHeightRequest="40" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Selected User Stats -->
+                <Frame Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Profile Statistics"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Text="{Binding SelectedUserStatsText}"
+                               FontSize="14"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap"
+                               Margin="0,10" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Users List -->
+                <Frame Style="{StaticResource CardStyle}"
+                       IsVisible="{Binding HasUsers}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="All Profiles"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center" />
+
+                        <CollectionView ItemsSource="{Binding Users}"
+                                       BackgroundColor="Transparent">
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:User">
+                                    <Frame BackgroundColor="{DynamicResource Background}"
+                                           Padding="15"
+                                           Margin="0,5"
+                                           CornerRadius="10"
+                                           BorderColor="{DynamicResource Primary}"
+                                         >
+
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="15">
+
+                                            <!-- Profile Icon -->
+                                            <Label Grid.Column="0"
+                                                   Text="👤"
+                                                   FontSize="24"
+                                                   VerticalOptions="Center" />
+
+                                            <!-- User Info -->
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding DisplayName}"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold"
+                                                       TextColor="{DynamicResource OnSurface}" />
+                                                <Label Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}}"
+                                                       FontSize="12"
+                                                       TextColor="{DynamicResource OnSurface}"
+                                                       Opacity="0.7" />
+                                            </VerticalStackLayout>
+
+                                            <!-- Rename Button -->
+                                            <Button Grid.Column="2"
+                                                    Text="✏️"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=RenameUserCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="14"
+                                                    Padding="8"
+                                                    BackgroundColor="{DynamicResource Warning}"
+                                                    TextColor="White"
+                                                    CornerRadius="15"
+                                                    MinimumWidthRequest="35"
+                                                    MinimumHeightRequest="35" />
+
+                                            <!-- Delete Button -->
+                                            <Button Grid.Column="3"
+                                                    Text="🗑️"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=DeleteUserCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="14"
+                                                    Padding="8"
+                                                    BackgroundColor="{DynamicResource Error}"
+                                                    TextColor="White"
+                                                    CornerRadius="15"
+                                                    MinimumWidthRequest="35"
+                                                    MinimumHeightRequest="35" />
+
+                                        </Grid>
+
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=SelectUserCommand}"
+                                                                CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- No Users Message -->
+                <Frame Style="{StaticResource CardStyle}"
+                       IsVisible="{Binding HasUsers, Converter={StaticResource InvertedBoolConverter}}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="👥"
+                               FontSize="60"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.5" />
+                        <Label Text="No profiles yet!"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource OnSurface}" />
+                        <Label Text="Create your first profile to start tracking your math quiz progress."
+                               FontSize="14"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource OnSurface}"
+                               Opacity="0.8"
+                               Margin="10,0" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Error Message -->
+                <Label Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}"
+                       FontSize="14"
+                       TextColor="{DynamicResource Error}"
+                       HorizontalTextAlignment="Center"
+                       Padding="10"
+                       BackgroundColor="#FFEBEE" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                          IsVisible="{Binding IsBusy}"
+                          IsRunning="{Binding IsBusy}"
+                          Color="{DynamicResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

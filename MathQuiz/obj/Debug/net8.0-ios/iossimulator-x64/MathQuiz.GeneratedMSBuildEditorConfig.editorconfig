@@ -1,0 +1,91 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0-ios
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MathQuiz
+build_property.ProjectDir = E:\AI\MathQuiz\MathQuiz\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[E:/AI/MathQuiz/MathQuiz/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[E:/AI/MathQuiz/MathQuiz/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[E:/AI/MathQuiz/MathQuiz/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Resources/Styles/Theme.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Resources.Styles.Theme.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Theme.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Theme.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/HomePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.HomePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\HomePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\HomePage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/LeaderboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.LeaderboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\LeaderboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\LeaderboardPage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ProfilePage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/QuizPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.QuizPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\QuizPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\QuizPage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/ResultsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.ResultsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ResultsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ResultsPage.xaml
+
+[E:/AI/MathQuiz/MathQuiz/Views/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MathQuiz.Views.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SettingsPage.xaml

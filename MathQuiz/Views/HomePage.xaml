@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.HomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:HomeViewModel"
+             BackgroundColor="{DynamicResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Welcome Section -->
+            <Frame Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="{Binding WelcomeMessage}"
+                           Style="{StaticResource HeadingStyle}"
+                           FontSize="24"
+                           TextColor="{DynamicResource Primary}" />
+
+                    <Label Text="Practice arithmetic with adaptive difficulty!"
+                           FontSize="16"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{DynamicResource OnSurface}"
+                           Opacity="0.8" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Quick Actions -->
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Quick Start Button -->
+                <Button Text="{Binding QuickStartText}"
+                        Command="{Binding QuickStartCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        FontSize="20"
+                        MinimumHeightRequest="60"
+                        SemanticProperties.Hint="Start a quick math quiz"
+                        AutomationId="QuickStartButton" />
+
+                <!-- Action Buttons Grid -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+
+                    <Button Grid.Column="0"
+                            Text="📊 Leaderboard"
+                            Command="{Binding ViewLeaderboardCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            BackgroundColor="{DynamicResource Success}"
+                            FontSize="16"
+                            MinimumHeightRequest="50" />
+
+                    <Button Grid.Column="1"
+                            Text="⚙️ Settings"
+                            Command="{Binding OpenSettingsCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            BackgroundColor="{DynamicResource Warning}"
+                            FontSize="16"
+                            MinimumHeightRequest="50" />
+
+                </Grid>
+
+            </VerticalStackLayout>
+
+            <!-- Current User Info -->
+            <Frame Style="{StaticResource CardStyle}" 
+                   IsVisible="{Binding CurrentUser, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Current Player"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource OnSurface}" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                        <Label Grid.Column="0"
+                               Text="👤"
+                               FontSize="24"
+                               VerticalOptions="Center" />
+
+                        <Label Grid.Column="1"
+                               Text="{Binding CurrentUser.DisplayName}"
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource OnSurface}" />
+
+                        <Button Grid.Column="2"
+                                Text="Switch"
+                                Command="{Binding SelectUserCommand}"
+                                FontSize="12"
+                                Padding="10,5"
+                                BackgroundColor="{DynamicResource Primary}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                MinimumHeightRequest="30" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- File: Views/HomePage.xaml (continued) -->
+            <!-- Getting Started Help (when no users) -->
+            <Frame Style="{StaticResource CardStyle}" 
+                   IsVisible="{Binding HasUsers, Converter={StaticResource InvertedBoolConverter}}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="🚀 Welcome to Math Quiz!"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{DynamicResource Primary}" />
+
+                    <Label Text="Tap 'Quick Start' to begin your first game. A random player name will be created for you automatically!"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{DynamicResource OnSurface}"
+                           Opacity="0.9" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Game Features -->
+            <Frame Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="✨ Game Features"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource OnSurface}" />
+
+                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="10" ColumnSpacing="15">
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="🎯" FontSize="20" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="Adaptive difficulty that grows with you" FontSize="14" />
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="🔥" FontSize="20" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="Build streaks for bonus points" FontSize="14" />
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="📱" FontSize="20" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="100% offline - no internet required" FontSize="14" />
+
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}"
+                   FontSize="14"
+                   TextColor="{DynamicResource Error}"
+                   HorizontalTextAlignment="Center"
+                   Padding="10"
+                   BackgroundColor="#FFEBEE"
+                   AutomationId="ErrorLabel" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

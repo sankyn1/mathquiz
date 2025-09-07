@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.QuizPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:QuizViewModel"
+             BackgroundColor="{DynamicResource Background}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- HUD (Header) -->
+        <Frame Grid.Row="0"
+               BackgroundColor="{DynamicResource Surface}"
+               Padding="15,10"
+               Margin="10,10,10,0"
+               CornerRadius="15">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+
+                <!-- Score -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                    <Label Text="{Binding ScoreText}"
+                           Style="{StaticResource HudTextStyle}"
+                           FontSize="18"
+                           TextColor="{DynamicResource Primary}" />
+                    <Label Text="SCORE"
+                           FontSize="10"
+                           TextColor="{DynamicResource OnSurface}"
+                           Opacity="0.7"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Streak -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Label Text="{Binding StreakText}"
+                           Style="{StaticResource HudTextStyle}"
+                           FontSize="18"
+                           TextColor="{DynamicResource Warning}" />
+                    <Label Text="STREAK"
+                           FontSize="10"
+                           TextColor="{DynamicResource OnSurface}"
+                           Opacity="0.7"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Level -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Label Text="{Binding LevelText}"
+                           Style="{StaticResource HudTextStyle}"
+                           FontSize="18"
+                           TextColor="{DynamicResource Success}" />
+                    <Label Text="LEVEL"
+                           FontSize="10"
+                           TextColor="{DynamicResource OnSurface}"
+                           Opacity="0.7"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+            </Grid>
+        </Frame>
+
+        <!-- Main Content -->
+        <VerticalStackLayout Grid.Row="1" 
+                            Padding="20" 
+                            Spacing="30"
+                            VerticalOptions="Center">
+
+            <!-- Progress Bar -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="{Binding QuestionCountText}"
+                       FontSize="14"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{DynamicResource OnSurface}"
+                       Opacity="0.8" />
+                <ProgressBar Progress="{Binding ProgressValue}"
+                            ProgressColor="{DynamicResource Primary}"
+                            BackgroundColor="{DynamicResource OnSurface}"
+                            HeightRequest="8"
+                            Margin="0,5" />
+            </VerticalStackLayout>
+
+            <!-- Timer (if enabled) -->
+            <Frame IsVisible="{Binding TimerVisible}"
+                   BackgroundColor="{DynamicResource Warning}"
+                   Padding="15,8"
+                   CornerRadius="20"
+                   HorizontalOptions="Center">
+                <Label Text="{Binding TimeRemaining, StringFormat='⏰ {0}s'}"
+                       TextColor="White"
+                       FontSize="16"
+                       FontAttributes="Bold" />
+            </Frame>
+
+            <!-- Question -->
+            <Label Text="{Binding QuestionExpression}"
+                   Style="{StaticResource QuestionStyle}"
+                   FontSize="42"
+                   Margin="0,20"
+                   SemanticProperties.Hint="Math question"
+                   AutomationId="QuestionLabel" />
+
+            <!-- Answer Options (2x2 Grid) -->
+            <Grid RowDefinitions="*,*" 
+                  ColumnDefinitions="*,*" 
+                  RowSpacing="15" 
+                  ColumnSpacing="15"
+                  HeightRequest="200"
+                  IsEnabled="{Binding ButtonsEnabled}">
+
+                <Button Grid.Row="0" Grid.Column="0"
+                        Text="{Binding AnswerOptions[0]}"
+                        Command="{Binding AnswerSelectedCommand}"
+                        CommandParameter="0"
+                        Style="{StaticResource AnswerButtonStyle}"
+                        MinimumHeightRequest="80"
+                        SemanticProperties.Hint="Answer option A"
+                        AutomationId="AnswerButton0" />
+
+                <Button Grid.Row="0" Grid.Column="1"
+                        Text="{Binding AnswerOptions[1]}"
+                        Command="{Binding AnswerSelectedCommand}"
+                        CommandParameter="1"
+                        Style="{StaticResource AnswerButtonStyle}"
+                        MinimumHeightRequest="80"
+                        SemanticProperties.Hint="Answer option B"
+                        AutomationId="AnswerButton1" />
+
+                <Button Grid.Row="1" Grid.Column="0"
+                        Text="{Binding AnswerOptions[2]}"
+                        Command="{Binding AnswerSelectedCommand}"
+                        CommandParameter="2"
+                        Style="{StaticResource AnswerButtonStyle}"
+                        MinimumHeightRequest="80"
+                        SemanticProperties.Hint="Answer option C"
+                        AutomationId="AnswerButton2" />
+
+                <Button Grid.Row="1" Grid.Column="1"
+                        Text="{Binding AnswerOptions[3]}"
+                        Command="{Binding AnswerSelectedCommand}"
+                        CommandParameter="3"
+                        Style="{StaticResource AnswerButtonStyle}"
+                        MinimumHeightRequest="80"
+                        SemanticProperties.Hint="Answer option D"
+                        AutomationId="AnswerButton3" />
+
+            </Grid>
+
+            <!-- Feedback Message -->
+            <Frame IsVisible="{Binding ShowFeedback}"
+                   BackgroundColor="{DynamicResource Primary}"
+                   Padding="20,10"
+                   CornerRadius="20"
+                   HorizontalOptions="Center"
+                   Opacity="0.9">
+                <Label Text="{Binding FeedbackMessage}"
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       AutomationId="FeedbackLabel" />
+            </Frame>
+
+        </VerticalStackLayout>
+
+        <!-- Bottom Section -->
+        <Frame Grid.Row="2"
+               BackgroundColor="{DynamicResource Surface}"
+               Padding="15"
+               Margin="10,0,10,10"
+               CornerRadius="15">
+            <Label Text="Tap your answer quickly for bonus points!"
+                   FontSize="12"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{DynamicResource OnSurface}"
+                   Opacity="0.7" />
+        </Frame>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                          IsVisible="{Binding IsBusy}"
+                          IsRunning="{Binding IsBusy}"
+                          Color="{DynamicResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+        <!-- Error Message -->
+        <Label Grid.Row="1"
+               Text="{Binding ErrorMessage}"
+               IsVisible="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}"
+               FontSize="16"
+               TextColor="{DynamicResource Error}"
+               HorizontalTextAlignment="Center"
+               VerticalOptions="Center"
+               Padding="20"
+               BackgroundColor="#FFEBEE"
+               AutomationId="ErrorLabel" />
+
+    </Grid>
+
+</ContentPage>

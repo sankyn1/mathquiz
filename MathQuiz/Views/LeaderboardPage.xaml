@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.LeaderboardPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:LeaderboardViewModel"
+             BackgroundColor="{DynamicResource Background}">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Header with Filter -->
+        <Frame Grid.Row="0"
+               BackgroundColor="{DynamicResource Primary}"
+               Padding="20,15"
+               CornerRadius="0"
+               Margin="0">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="{Binding Title}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center" />
+
+                <Button Grid.Column="1"
+                        Text="👤 Filter"
+                        Command="{Binding FilterByCurrentUserCommand}"
+                        FontSize="12"
+                        Padding="10,5"
+                        BackgroundColor="White"
+                        TextColor="{DynamicResource Primary}"
+                        CornerRadius="15"
+                        MinimumHeightRequest="30" />
+            </Grid>
+        </Frame>
+
+        <!-- Tab Selector -->
+        <Frame Grid.Row="1"
+               BackgroundColor="{DynamicResource Surface}"
+               Padding="0"
+               CornerRadius="0"
+               BorderColor="Transparent">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="0">
+
+                <Button Grid.Column="0"
+                        Text="🏆 Top Scores"
+                        Command="{Binding TabSelectionChangedCommand}"
+                        CommandParameter="0"
+                        BackgroundColor="{Binding SelectedTabIndex, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0, FallbackValue={DynamicResource Primary}}"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="0"
+                        BorderWidth="0"
+                        MinimumHeightRequest="45" />
+
+                <Button Grid.Column="1"
+                        Text="📅 Recent Games"
+                        Command="{Binding TabSelectionChangedCommand}"
+                        CommandParameter="1"
+                        BackgroundColor="{Binding SelectedTabIndex, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1, FallbackValue={DynamicResource OnSurface}}"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="0"
+                        BorderWidth="0"
+                        MinimumHeightRequest="45" />
+
+            </Grid>
+        </Frame>
+
+        <!-- Content -->
+        <RefreshView Grid.Row="2"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+
+            <!-- Top Scores Tab -->
+            <CollectionView ItemsSource="{Binding TopSessions}"
+                           IsVisible="{Binding SelectedTabIndex, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0}"
+                           BackgroundColor="Transparent"
+                           Margin="10,10,10,0">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="40" VerticalOptions="Center">
+                        <Label Text="🏆"
+                               FontSize="60"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.5" />
+                        <Label Text="{Binding EmptyMessage}"
+                               FontSize="16"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource OnSurface}"
+                               Opacity="0.7"
+                               Margin="20" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SessionDisplayModel">
+                        <Frame Style="{StaticResource CardStyle}" 
+                               Margin="5">
+                            <Grid ColumnDefinitions="Auto,*,Auto" 
+                                  RowDefinitions="Auto,Auto"
+                                  ColumnSpacing="15" 
+                                  RowSpacing="5">
+
+                                <!-- Rank Icon -->
+                                <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                       Text="{Binding RankIcon}"
+                                       FontSize="30"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center" />
+
+                                <!-- Player Info -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding PlayerName}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="{DynamicResource OnSurface}" />
+                                    <Label Text="{Binding ModeText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           Opacity="0.7" />
+                                </VerticalStackLayout>
+
+                                <!-- Score -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+                                    <Label Text="{Binding ScoreText}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding PerformanceColor}"
+                                           HorizontalTextAlignment="End" />
+                                    <Label Text="{Binding AccuracyText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="End"
+                                           Opacity="0.8" />
+                                </VerticalStackLayout>
+
+                                <!-- Additional Stats -->
+                                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                      ColumnDefinitions="*,*,*" 
+                                      ColumnSpacing="10">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding StreakText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           Opacity="0.8" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding LevelText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="Center"
+                                           Opacity="0.8" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding DateText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="End"
+                                           Opacity="0.8" />
+                                </Grid>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
+
+        <!-- Recent Games Tab -->
+        <RefreshView Grid.Row="2"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsBusy}"
+                     IsVisible="{Binding SelectedTabIndex, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1}">
+
+            <CollectionView ItemsSource="{Binding RecentSessions}"
+                           BackgroundColor="Transparent"
+                           Margin="10,10,10,0">
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="40" VerticalOptions="Center">
+                        <Label Text="📅"
+                               FontSize="60"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.5" />
+                        <Label Text="No recent games found. Start playing to see your game history!"
+                               FontSize="16"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource OnSurface}"
+                               Opacity="0.7"
+                               Margin="20" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SessionDisplayModel">
+                        <Frame Style="{StaticResource CardStyle}" 
+                               Margin="5,5,5,0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" 
+                                  RowDefinitions="Auto,Auto"
+                                  ColumnSpacing="15" 
+                                  RowSpacing="8">
+
+                                <!-- Date Circle -->
+                                <Frame Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                       BackgroundColor="{Binding PerformanceColor}"
+                                       Padding="8"
+                                       CornerRadius="25"
+                                       WidthRequest="50"
+                                       HeightRequest="50"
+                                       VerticalOptions="Center">
+                                    <Label Text="{Binding DateText, StringFormat='{0:dd}'}"
+                                           TextColor="White"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center" />
+                                </Frame>
+
+                                <!-- Game Info -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding ModeText}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{DynamicResource OnSurface}" />
+                                    <Label Text="{Binding TimeText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           Opacity="0.7" />
+                                </VerticalStackLayout>
+
+                                <!-- Score Info -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+                                    <Label Text="{Binding ScoreText}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding PerformanceColor}"
+                                           HorizontalTextAlignment="End" />
+                                    <Label Text="{Binding AccuracyText}"
+                                           FontSize="12"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="End"
+                                           Opacity="0.8" />
+                                </VerticalStackLayout>
+
+                                <!-- Stats Row -->
+                                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                      ColumnDefinitions="*,*,*" 
+                                      ColumnSpacing="10">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding StreakText}"
+                                           FontSize="11"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           Opacity="0.7" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding LevelText}"
+                                           FontSize="11"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="Center"
+                                           Opacity="0.7" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding PlayerName}"
+                                           FontSize="11"
+                                           TextColor="{DynamicResource OnSurface}"
+                                           HorizontalTextAlignment="End"
+                                           Opacity="0.7" />
+                                </Grid>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="2"
+                          IsVisible="{Binding IsBusy}"
+                          IsRunning="{Binding IsBusy}"
+                          Color="{DynamicResource Primary}"
+                          VerticalOptions="Center"
+                          HorizontalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

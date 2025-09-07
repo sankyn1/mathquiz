@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MathQuiz.Views.ResultsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MathQuiz.ViewModels"
+             Title="{Binding Title}"
+             x:DataType="vm:ResultsViewModel"
+             BackgroundColor="{DynamicResource Background}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- Celebration Header -->
+            <VerticalStackLayout Spacing="10" Margin="0,20,0,0">
+                <Label Text="🎉"
+                       FontSize="60"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding ShowCelebration}" />
+
+                <Label Text="{Binding ResultMessage}"
+                       Style="{StaticResource HeadingStyle}"
+                       FontSize="22"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{DynamicResource Primary}"
+                       Margin="10,0" />
+
+                <Label Text="{Binding PerformanceLevel}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{DynamicResource Success}"
+                       BackgroundColor="{DynamicResource Surface}"
+                       Padding="15,8"
+                       Margin="20,0" />
+            </VerticalStackLayout>
+
+            <!-- Results Stats -->
+            <Frame Style="{StaticResource CardStyle}">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
+                      ColumnDefinitions="*,*" 
+                      RowSpacing="20" 
+                      ColumnSpacing="20">
+
+                    <!-- Score -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
+                        <Label Text="{Binding ScoreText}"
+                               FontSize="36"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Final Score"
+                               FontSize="14"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.8" />
+                    </VerticalStackLayout>
+
+                    <!-- Accuracy -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
+                        <Label Text="{Binding AccuracyText}"
+                               FontSize="36"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Success}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Accuracy"
+                               FontSize="14"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.8" />
+                    </VerticalStackLayout>
+
+                    <!-- Max Streak -->
+                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
+                        <Label Text="{Binding StreakText, StringFormat='🔥 {0}'}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Warning}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Best Streak"
+                               FontSize="14"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.8" />
+                    </VerticalStackLayout>
+
+                    <!-- Highest Level -->
+                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                        <Label Text="{Binding LevelText}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource Primary}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Top Level"
+                               FontSize="14"
+                               TextColor="{DynamicResource OnSurface}"
+                               HorizontalTextAlignment="Center"
+                               Opacity="0.8" />
+                    </VerticalStackLayout>
+
+                    <!-- Questions Answered -->
+                    <Frame Grid.Row="2" Grid.ColumnSpan="2"
+                           BackgroundColor="{DynamicResource Background}"
+                           Padding="15,10"
+                           CornerRadius="10"
+                           BorderColor="Transparent">
+                        <Label Text="{Binding TotalQuestionsText, StringFormat='Questions Answered: {0}'}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource OnSurface}" />
+                    </Frame>
+
+                </Grid>
+            </Frame>
+
+            <!-- Action Buttons -->
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Play Again Button -->
+                <Button Text="🚀 Play Again"
+                        Command="{Binding PlayAgainCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        FontSize="20"
+                        MinimumHeightRequest="60"
+                        SemanticProperties.Hint="Start a new game"
+                        AutomationId="PlayAgainButton" />
+
+                <!-- Secondary Actions Grid -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+
+                    <Button Grid.Column="0"
+                            Text="📊 Leaderboard"
+                            Command="{Binding ViewLeaderboardCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            BackgroundColor="{DynamicResource Success}"
+                            FontSize="16"
+                            MinimumHeightRequest="50" />
+
+                    <Button Grid.Column="1"
+                            Text="🏠 Home"
+                            Command="{Binding GoHomeCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            BackgroundColor="{DynamicResource Warning}"
+                            FontSize="16"
+                            MinimumHeightRequest="50" />
+
+                </Grid>
+
+                <!-- Share Button -->
+                <Button Text="📤 Share Results"
+                        Command="{Binding ShareResultsCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        BackgroundColor="{DynamicResource OnSurface}"
+                        TextColor="{DynamicResource Surface}"
+                        FontSize="16"
+                        MinimumHeightRequest="45"
+                        Opacity="0.8" />
+
+            </VerticalStackLayout>
+
+            <!-- Motivational Message -->
+            <Frame BackgroundColor="{DynamicResource Primary}"
+                   Padding="20"
+                   CornerRadius="15"
+                   Margin="0,10,0,20">
+                <Label Text="Keep practicing to improve your math skills! 💪"
+                       FontSize="16"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Italic" />
+            </Frame>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}"
+                   FontSize="14"
+                   TextColor="{DynamicResource Error}"
+                   HorizontalTextAlignment="Center"
+                   Padding="10"
+                   BackgroundColor="#FFEBEE" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

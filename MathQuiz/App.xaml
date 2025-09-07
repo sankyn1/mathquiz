@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application x:Class="MathQuiz.App"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MathQuiz.Converters">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Value Converters -->
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converters:StringIsNullOrEmptyToBoolConverter x:Key="StringIsNotNullOrEmptyConverter" />
+            <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

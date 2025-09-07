@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Light Theme -->
+    <Style x:Key="LightTheme" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource Background}" />
+    </Style>
+
+    <!-- Dark Theme -->
+    <Style x:Key="DarkTheme" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundDark}" />
+    </Style>
+
+    <!-- High Contrast Theme -->
+    <Style x:Key="HighContrastTheme" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource HighContrastBackground}" />
+    </Style>
+
+</ResourceDictionary>
