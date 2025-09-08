@@ -68,8 +68,8 @@ public class SettingsService : ISettingsService
         // Apply theme changes based on accessibility settings
         if (settings.HighContrast)
         {
-            Application.Current?.Resources.MergedDictionaries.Add(
-                new ResourceDictionary { Source = new Uri("ms-appx:///Resources/Styles/HighContrastTheme.xaml") });
+            //Application.Current?.Resources.MergedDictionaries.Add(
+            //    new ResourceDictionary { Source = new Uri("ms-appx:///Resources/Styles/HighContrastTheme.xaml") });
         }
 
         // Text scaling would be handled by the OS, but we can provide hints

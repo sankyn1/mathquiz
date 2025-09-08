@@ -131,6 +131,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         Settings.TimerEnabled = !Settings.TimerEnabled;
         IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
     }
 
     [RelayCommand]
@@ -138,6 +139,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         Settings.SoundEnabled = !Settings.SoundEnabled;
         IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
     }
 
     [RelayCommand]
@@ -145,6 +147,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         Settings.VibrationEnabled = !Settings.VibrationEnabled;
         IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
     }
 
     [RelayCommand]
@@ -152,6 +155,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         Settings.BiggerText = !Settings.BiggerText;
         IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
     }
 
     [RelayCommand]
@@ -159,6 +163,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         Settings.HighContrast = !Settings.HighContrast;
         IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
     }
 
     [RelayCommand]
@@ -168,16 +173,45 @@ public partial class SettingsViewModel : BaseViewModel
         {
             Settings.QuestionsPerSession = count;
             IsDirty = true;
+            OnPropertyChanged(nameof(Settings));
+        }
+        else if (parameter is string str && int.TryParse(str, out int value))
+        {
+            Settings.QuestionsPerSession = value;
+            IsDirty = true;
+            OnPropertyChanged(nameof(Settings));
         }
     }
 
     [RelayCommand]
     private void UpdateTimerSeconds(object parameter)
     {
-        if (parameter is int seconds)
+        int seconds = 0;
+
+        if (parameter is int intValue)
+            seconds = intValue;
+        else if (parameter is string str && int.TryParse(str, out var parsed))
+            seconds = parsed;
+        else
+            return; // Not valid, exit early
+
+        Settings.TimerSeconds = seconds;
+        IsDirty = true;
+        OnPropertyChanged(nameof(Settings));
+    }
+
+    public bool TimerEnabled
+    {
+        get => Settings.TimerEnabled;
+        set
         {
-            Settings.TimerSeconds = seconds;
-            IsDirty = true;
+            if (Settings.TimerEnabled != value)
+            {
+                Settings.TimerEnabled = value;
+                IsDirty = true;
+                OnPropertyChanged(nameof(TimerEnabled));
+                OnPropertyChanged(nameof(Settings)); // In case you have other UI bound to Settings
+            }
         }
     }
 }

@@ -1,1 +1,0 @@
-E:\AI\MathQuiz\MathQuiz\MathQuiz.csproj;x64

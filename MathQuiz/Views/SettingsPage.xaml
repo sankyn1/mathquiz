@@ -140,9 +140,9 @@
                                 </VerticalStackLayout>
 
                                 <Switch Grid.Column="1"
-                                        IsToggled="{Binding Settings.TimerEnabled}"
-                                        OnColor="{DynamicResource Primary}"
-                                        ThumbColor="White" />
+        IsToggled="{Binding TimerEnabled, Mode=TwoWay}"
+        OnColor="{DynamicResource Primary}"
+        ThumbColor="White" />
                             </Grid>
 
                             <!-- Timer Duration (when enabled) -->
